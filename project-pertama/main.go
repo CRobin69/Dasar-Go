@@ -55,108 +55,6 @@ func main() {
 	wkwk := 5 <= 10
 	fmt.Printf("Tipe data ini adalah %t, yang bervalue %v\n", wkwk, wkwk)
 
-	fmt.Println("SELEKSI KONDISI")
-	var point = 10.12
-
-	if point == 10 {
-		fmt.Println("Jago")
-	} else if point == 5 {
-		fmt.Println("Hadeh")
-	} else if point == 4 {
-		fmt.Println("Yang bener aje, rugi dong")
-	} else {
-		fmt.Printf("Tidak lulus ! Nilai anda %.5f\n", point)
-	}
-
-	//Variabel Temporary --> hanya bisa dipake diseleksi kondisi itu aja
-	pointer := 100
-	if percent := pointer + 10; percent >= 10 {
-		fmt.Println("manyap")
-	} else {
-		fmt.Println("noob")
-	}
-
-	//Switch CASE
-	casing := 7
-	switch casing {
-	case 10:
-		fmt.Println("gacor")
-	case 8, 6, 7, 5: //banyak case, pemisahnya tanda koma
-		{
-			fmt.Println("mayan")
-			fmt.Println("wikwokwikwok")
-		}
-	default:
-		{
-			fmt.Println("wkwk lawak")
-			fmt.Println("hoho bisa gini")
-		}
-		//{} bisa untuk switch case berstatement banyak
-	}
-	fmt.Println()
-
-	//switch case bisa ala if else di GO
-	var pointer2 = 6
-	switch {
-	case pointer2 == 8:
-		fmt.Println("perfect")
-	case (pointer2 < 8) && (pointer2 > 3):
-		fmt.Println("awesome")
-		fallthrough // digunakan apabila case sudah break tetapi dipaksa melakukan pengecekan 1x lagi tanpa menghiraukan nilai kondisi
-	case pointer2 < 5:
-		fmt.Println("you need to learn more")
-	default:
-		{
-			fmt.Println("not bad")
-			fmt.Println("you need to learn more")
-		}
-	}
-
-	fmt.Println()
-	fmt.Println("PERULANGAN")
-	for i := 0; i < 5; i++ { //kek java
-		fmt.Println("Angka", i)
-	}
-	fmt.Println()
-
-	// var i = 0
-	// for i < 5 { --> hanya kondisi
-	// fmt.Println("Angka", i)
-	// i++
-
-	// Perulangan dengan RANGE (String, Array, Slice, Map)
-	//1. String
-	var xs = "ayam"        // kalau for range pada String dia per character dan hasilnya ASCII
-	for i, v := range xs { //oleh karena itu perlu dikonversi jadi string dengan cara string (nama variabel)
-		fmt.Println("Index=", i, "Value=", string(v)) // gini contohnya
-	}
-	fmt.Println()
-
-	//2. Array
-	var ys = [5]int{10, 20, 30, 40, 50}
-	for i, v := range ys {
-		fmt.Println("Value=", v, "Index ke - ", i)
-	}
-	fmt.Println()
-
-	//3. Slice
-	var zs = ys[0:2]
-	for _, v := range zs { //_(underscore) variabel penampung nilai yang g dipake karena ga boleh ada yang nganggur
-		fmt.Println("Value=", v)
-	}
-	fmt.Println()
-
-	//Perulangan dengan Pemanfaatan Label untuk break/continue
-	// outerLoop:
-	// 	for i := 0; i < 5; i++ {
-	// 		for j := 0; j < 5; j++ {
-	// 			if i == 3 {
-	// 				break outerLoop
-	// 			}
-	// 			fmt.Print("matriks [", i, "][", j, "]", "\n")
-	// 		}
-	// 	}
-
 	fmt.Println()
 	fmt.Println("INISIALISASI ARRAY")
 
@@ -228,17 +126,17 @@ func main() {
 	slice4[0] = "Ups"
 	fmt.Println(slice4)
 	fmt.Println(days)
-	fmt.Println()	
+	fmt.Println()
 	//Make Slices
-	newSlice := make([] string, 2, 5)
+	newSlice := make([]string, 2, 5)
 	newSlice[0] = "Eko"
 	newSlice[1] = "Eko"
-	
+
 	fmt.Println(newSlice)
 	fmt.Println(cap(newSlice))
 	fmt.Println(len(newSlice))
 
-	newSlice2 := append (newSlice, "Baid")
+	newSlice2 := append(newSlice, "Baid")
 	fmt.Println(newSlice2)
 	fmt.Println(cap(newSlice2))
 	fmt.Println(len(newSlice2))
@@ -247,7 +145,7 @@ func main() {
 	fmt.Println(newSlice2)
 	fmt.Println(newSlice)
 
-	fromSlice := days [:]
+	fromSlice := days[:]
 	toSlice := make([]string, len(fromSlice), cap(fromSlice))
 
 	copy(toSlice, fromSlice)
@@ -263,9 +161,154 @@ func main() {
 
 	//cara II
 	person := map[string]string{
-		"name" : "Christopher Robin",
-		"School" : "University Brawijaya",
+		"name":   "Christopher Robin", //key dan value, key seperti index pada array
+		"School": "University Brawijaya",
 	}
- 
 
+	fmt.Println(person["name"])
+	fmt.Println(person["School"])
+	book := make(map[string]string)
+	book["title"] = "Go-Lang"
+	book["author"] = "Robin"
+	book["wrong"] = "kimochi"
+	fmt.Println(book)
+	delete(book, "wrong") // didelete menggunakan key
+	fmt.Println(book)
+
+	fmt.Println()
+
+	fmt.Println("SELEKSI KONDISI")
+	var point = 10.12
+
+	if point == 10 {
+		fmt.Println("Jago")
+	} else if point == 5 {
+		fmt.Println("Hadeh")
+	} else if point == 4 {
+		fmt.Println("Yang bener aje, rugi dong")
+	} else {
+		fmt.Printf("Tidak lulus ! Nilai anda %.5f\n", point)
+	}
+
+	//Variabel Temporary --> hanya bisa dipake diseleksi kondisi itu aja
+	pointer := 100
+	if percent := pointer + 10; percent >= 10 {
+		fmt.Println("manyap")
+	} else {
+		fmt.Println("noob")
+	}
+
+	//Switch CASE
+	casing := 7
+	switch casing {
+	case 10:
+		fmt.Println("gacor")
+	case 8, 6, 7, 5: //banyak case, pemisahnya tanda koma
+		{
+			fmt.Println("mayan")
+			fmt.Println("wikwokwikwok")
+		}
+	default:
+		{
+			fmt.Println("wkwk lawak")
+			fmt.Println("hoho bisa gini")
+		}
+		//{} bisa untuk switch case berstatement banyak
+	}
+	fmt.Println()
+
+	//switch case bisa ala if else di GO
+	switch length := len(array1); length > 5 {
+	case true:
+		fmt.Println("benar")
+	case false:
+		fmt.Println("salah")
+	}
+
+	var pointer2 = 6
+	switch {
+	case pointer2 == 8:
+		fmt.Println("perfect")
+	case (pointer2 < 8) && (pointer2 > 3):
+		fmt.Println("awesome")
+		fallthrough // digunakan apabila case sudah break tetapi dipaksa melakukan pengecekan 1x lagi tanpa menghiraukan nilai kondisi
+	case pointer2 < 5:
+		fmt.Println("you need to learn more")
+	default:
+		{
+			fmt.Println("not bad")
+			fmt.Println("you need to learn more")
+		}
+	}
+	fmt.Println()
+	fmt.Println("PERULANGAN")
+	for i := 0; i < 5; i++ { //kek java
+		fmt.Println("Angka", i)
+	}
+	fmt.Println()
+
+	// var i = 0
+	// for i < 5 { --> hanya kondisi
+	// fmt.Println("Angka", i)
+	// i++
+
+	// Perulangan dengan RANGE (String, Array, Slice, Map)
+	//1. String
+	var xs = "ayam"        // kalau for range pada String dia per character dan hasilnya ASCII
+	for i, v := range xs { //oleh karena itu perlu dikonversi jadi string dengan cara string (nama variabel)
+		fmt.Println("Index=", i, "Value=", string(v)) // gini contohnya
+	}
+	fmt.Println()
+
+	//2. Array
+	var ys = [5]string{"Budi", "Eko", "Firman", "Gucai", "Belo"}
+	for i, v := range ys {
+		fmt.Println("Value =", v, "Index ke - ", i)
+	}
+	fmt.Println()
+
+	//3. Slice
+	var zs = ys[0:2]
+	for _, v := range zs { //_(underscore) variabel penampung nilai yang g dipake karena ga boleh ada yang nganggur
+		fmt.Println("Value =", v)
+	}
+	fmt.Println()
+
+	// Perulangan dengan Pemanfaatan Label untuk break/continue
+outerLoop:
+	for i := 0; i < 5; i++ {
+		for j := 0; j < 5; j++ {
+			if i == 3 || j == 3 {
+				continue outerLoop
+				//break outerLoop
+			}
+			fmt.Print("matriks [", i, "][", j, "]", "\n")
+		}
+	}
+
+	fmt.Println()
+	fmt.Println("Function Baby")
+	sayHello()
+	parameter("Christopher", "Robin")
+	result := getHello("Christopher Robin")
+	fmt.Println(result)
+	firstnames, lastnames := multipleHello()
+	//firstnames, _ = multipleHello() --> digunakan untuk menghiraukan last name karena _ blackhole
+	fmt.Println(firstnames, lastnames, "cantik")
+}
+
+func parameter(firstname string, lastname string) { //parameter function
+	fmt.Println("Hallo ", firstname, lastname)
+}
+
+func getHello(nama string) string { //return value 1 biji
+	return "Hello " + nama
+}
+
+func multipleHello() (string, string) { //multiple return value
+	return "Eko", "Budi"
+}
+
+func sayHello() {
+	fmt.Println("Becek")
 }
