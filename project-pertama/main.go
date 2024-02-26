@@ -147,15 +147,15 @@ func main() {
 	fmt.Println()
 
 	//Perulangan dengan Pemanfaatan Label untuk break/continue
-outerLoop:
-	for i := 0; i < 5; i++ {
-		for j := 0; j < 5; j++ {
-			if i == 3 {
-				break outerLoop
-			}
-			fmt.Print("matriks [", i, "][", j, "]", "\n")
-		}
-	}
+	// outerLoop:
+	// 	for i := 0; i < 5; i++ {
+	// 		for j := 0; j < 5; j++ {
+	// 			if i == 3 {
+	// 				break outerLoop
+	// 			}
+	// 			fmt.Print("matriks [", i, "][", j, "]", "\n")
+	// 		}
+	// 	}
 
 	fmt.Println()
 	fmt.Println("INISIALISASI ARRAY")
@@ -178,30 +178,94 @@ outerLoop:
 
 	//Array 2D
 	//var numbers1 = [2][3]int{[3]int{3, 2, 3}, [3]int{3, 4, 5}} --> versi ribet
-	var numbers2 = [2][3]int{{3, 2, 3}, {3, 4, 5}} //--> simpel
-	//fmt.Println("numbers1", numbers1)
-	fmt.Println("numbers2", numbers2)
+	// var numbers2 = [2][3]int{{3, 2, 3}, {3, 4, 5}} //--> simpel
+	// //fmt.Println("numbers1", numbers1)
+	// fmt.Println("numbers2", numbers2)
 
-	var array2D [3][3]int
-	for i := 0; i < 3; i++ {
-		for j := 0; j < 3; j++ {
-			array2D[i][j] = i + j
-		}
-	}
+	// var array2D [3][3]int
+	// for i := 0; i < 3; i++ {
+	// 	for j := 0; j < 3; j++ {
+	// 		array2D[i][j] = i + j
+	// 	}
+	// }
 
-	for i := 0; i < len(array2D); i++ {
-		for j := 0; j < len(array2D[0]); j++ {
-			fmt.Print(array2D[i][j], " ")
-		}
-		fmt.Println()
-	}
+	// for i := 0; i < len(array2D); i++ {
+	// 	for j := 0; j < len(array2D[0]); j++ {
+	// 		fmt.Print(array2D[i][j], " ")
+	// 	}
+	// 	fmt.Println()
+	// }
 
-	fmt.Println()
+	// fmt.Println()
 
 	//Make, belum jelas untuk apa
 	var fruits1 = make([]string, 2)
 	fruits1[0] = "apple"
 	fruits1[1] = "manggo"
 	fmt.Println(fruits1)
+
+	fmt.Println("SLICES")
+	//slice elemen bisa bertambah secara dinamis
+	// merupakan data yang mengakses sebagian atau full array
+	//3 data : pointer, length, and capacity
+	//slice dari array
+	days := [7]string{"Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"}
+	slice1 := days[1:3] //dari index ke 1 < index ke 3
+	fmt.Println(len(slice1))
+	fmt.Println(cap(slice1))
+	fmt.Println((slice1))
+
+	slice2 := days[:] //mengeprint semua
+	fmt.Println(slice2)
+
+	var slice3 []string = days[5:] //dari index ke 5 sampai akhir
+	slice3[0] = "Sabtu Baru"
+	slice3[1] = "Minggu Baru"
+	fmt.Println(days) // slice yang dibuat dari array memakai prinsip pass by reference
+
+	slice4 := append(slice3, "Libur Baru") //kapasitas days kan 6 kalau ditambah 1 lagi jadi max capacity sehingga membentuk array baru
+	//tidak pass by reference
+	slice4[0] = "Ups"
+	fmt.Println(slice4)
+	fmt.Println(days)
+	fmt.Println()	
+	//Make Slices
+	newSlice := make([] string, 2, 5)
+	newSlice[0] = "Eko"
+	newSlice[1] = "Eko"
+	
+	fmt.Println(newSlice)
+	fmt.Println(cap(newSlice))
+	fmt.Println(len(newSlice))
+
+	newSlice2 := append (newSlice, "Baid")
+	fmt.Println(newSlice2)
+	fmt.Println(cap(newSlice2))
+	fmt.Println(len(newSlice2))
+
+	newSlice2[1] = "mama" // pass by reference, selama cap pada array tidak penuh, tidak buat array baru sehingga pass by reference
+	fmt.Println(newSlice2)
+	fmt.Println(newSlice)
+
+	fromSlice := days [:]
+	toSlice := make([]string, len(fromSlice), cap(fromSlice))
+
+	copy(toSlice, fromSlice)
+
+	fmt.Println(fromSlice)
+	fmt.Println(toSlice)
+
+	//MAP
+	//Cara I
+	// var person map[string]string = map[string]string{}
+	// person["name"] = "Christopher Robin"
+	// person ["address"] = "Kucing"
+
+	//cara II
+	person := map[string]string{
+		"name" : "Christopher Robin",
+		"School" : "University Brawijaya",
+	}
+ 
 
 }
