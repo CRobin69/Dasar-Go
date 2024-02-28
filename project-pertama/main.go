@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"project-pertama/helper"
+	"project-pertama/cobaya"
+	
+)
 
 func main() {
 	//GoLang gabole 1 variabel pun nganggur
@@ -121,12 +126,12 @@ func main() {
 	slice3[1] = "Minggu Baru"
 	fmt.Println(days) // slice yang dibuat dari array memakai prinsip pass by reference
 
-	slice4 := append(slice3, "Libur Baru") //kapasitas days kan 6 kalau ditambah 1 lagi jadi max capacity sehingga membentuk array baru
+	slice2 = append(slice2, "Libur Baru", "lola", "bebk") //kapasitas days kan 6 kalau ditambah 1 lagi jadi max capacity sehingga membentuk array baru
 	//tidak pass by reference
-	slice4[0] = "Ups"
-	fmt.Println(slice4)
+	slice3[0] = "Ups"
+	fmt.Println(slice3)
 	fmt.Println(days)
-	fmt.Println()
+	fmt.Println("capacity", cap(slice2))
 	//Make Slices
 	newSlice := make([]string, 2, 5)
 	newSlice[0] = "Eko"
@@ -153,7 +158,7 @@ func main() {
 	fmt.Println(fromSlice)
 	fmt.Println(toSlice)
 
-	//MAP
+	//MAPS
 	//Cara I
 	// var person map[string]string = map[string]string{}
 	// person["name"] = "Christopher Robin"
@@ -164,13 +169,16 @@ func main() {
 		"name":   "Christopher Robin", //key dan value, key seperti index pada array
 		"School": "University Brawijaya",
 	}
+	val1, ok1 := person["name"] // cara mengecek key n value pd map
+	fmt.Println(val1, ok1)
 
 	fmt.Println(person["name"])
 	fmt.Println(person["School"])
 	book := make(map[string]string)
 	book["title"] = "Go-Lang"
 	book["author"] = "Robin"
-	book["wrong"] = "kimochi"
+	book["wrong"] = "kimochi" //dapat mengadd dan tidak ada limit
+
 	fmt.Println(book)
 	delete(book, "wrong") // didelete menggunakan key
 	fmt.Println(book)
@@ -295,6 +303,349 @@ outerLoop:
 	firstnames, lastnames := multipleHello()
 	//firstnames, _ = multipleHello() --> digunakan untuk menghiraukan last name karena _ blackhole
 	fmt.Println(firstnames, lastnames, "cantik")
+
+	//inisialisasi terlebih dahulu sesuai isi function
+	awal, tengah, akhir := namedReturnValue()
+	fmt.Println(awal, tengah, akhir)
+
+	//Variadic Function --> varargs
+	kocakgeming := sumAll(1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+	fmt.Println(kocakgeming)
+
+	//SLice Parameter
+	cobaSlice := []int{12, 3, 4, 5, 6, 76, 7}
+	cobaSlice2 := sumAll(cobaSlice...)
+	fmt.Println(cobaSlice2)
+
+	getHellos := getHello // variabel getHellos menjadi func getHello --> function as value
+	fmt.Println(getHellos("Eko"))
+
+	//Function as Parameter
+	sayHelloWithFilter("Eko", spamFilter)
+	filter := spamFilter
+	sayHelloWithFilter("Anjing", filter)
+
+	//Anonymous Function --> function tanpa nama
+	blacklist := func(name string) bool {
+		return name == "anjing"
+	}
+	registerUser("eko", blacklist)
+	registerUser("anjing", func(name string) bool {
+		return name == "anjing"
+	})
+	//versi for
+	fmt.Println(factorial(10))
+	//versi pake basis
+	fmt.Println(FactorialRecursive(10))
+
+	//Closures --> kemampuan suatu function berinteraksi dengan data disekitarnya
+	//Jadi kek walau counter ga di dalam anonymous function dia ttp ke increment
+	counter := 0
+	increment := func() {
+		fmt.Println("Increment")
+		counter++
+	}
+
+	increment()
+	increment()
+	increment()
+	fmt.Println(counter)
+	//Defer function yang bisa dijadwalkan setelah function lain selesai dieksekusi (ditunda)
+	runapplication()
+	//Panic --> menghentikan program, tp defer function tetap berjalan
+	runApp(true)
+	//Recover --> menangkap data panic, menggunakan recover didalam func yang di defer
+	fmt.Println("BBC")
+	/*
+		This is mult line comment
+		You can add alot of comments here
+		Until you reach the star
+	*/
+	//Struct -->template data yang keknya mirip sama class di java
+	//nama variabel dalam struct depannya huruf besar
+	var eko Customer // sama deklarasi objek pada OOP menggunakan keyword new
+	eko.Name = "Neynoy Batman"
+	eko.Age = 18
+	eko.Address = "Indonesia"
+	//penampilan isi dari var eko bertipe "Customer" mengikuti susunan pada struct Customer
+	fmt.Println(eko)
+	fmt.Println(eko.Name)
+	fmt.Println(eko.Address)
+	fmt.Println(eko.Age)
+
+	//Struct Literals
+	//I
+	joko := Customer{
+		Name:    "Robin",
+		Address: "Indonesia",
+		Age:     30,
+	}
+	fmt.Println(joko)
+	//II
+	budi := Customer{"Budi", "Indonesia", 30}
+	fmt.Println(budi)
+
+	//Struct Method --> Struct yang memiliki function dinamakan method
+	budi.sayHello1("Agus")
+	eko.sayHello1("Agus")
+	joko.sayHello1("Joko")
+	//Interface --> tipe data abstract, sebagai kontrak
+	persons := Person{
+		Name: "Chris",
+	}
+	Hello(persons)
+	animal := Animal{Name: "Anjing"}
+	Hello(animal)
+	// var kosong any any merepresentasikan tipe data
+	kosong := random()
+	fmt.Println(kosong)
+
+	//Data Nil --> data kosong, beberapa tipe data (interface, function, map, slice, pointer dan channel)
+	data := NewMap("")
+	if data == nil {
+		fmt.Println("Data Map Kosong")
+	} else {
+		fmt.Println(data["nama"])
+	}
+
+	//Type Assertions --> merubah tipe data dari interface kosong
+	results := percobaan()
+	// resultString := results.(string)
+	// fmt.Println(resultString) --> manual
+
+	// resultInt := results.(int)
+	// fmt.Println(resultInt) salah
+
+	//Type Assertions menggunakan Switch
+	switch value := results.(type) {
+	case string:
+		fmt.Println("String", value)
+	case int:
+		fmt.Println("Int", value)
+	default:
+		fmt.Println("Unknown")
+	}
+
+	//Pointer (inti materi) -- >referencing
+	//Di Golang semua variabel pass by value
+
+	//Operator & (ampersand)
+	address3 := Address{"Jakarta Pusat", "DKI Jakarta", "Indonesia"}
+	var address4 *Address = &address3 //pointer
+	address4.City = "Papua"
+	fmt.Println(address3)   //ikut berubah
+	fmt.Println((address4)) //berubah --> pointer
+
+	// numberA := 4
+	// var NumberB *int = &numberA
+	// fmt.Println(&numberA)//--> lokasi memori nya sama dengan numberB
+	// fmt.Println(NumberB)
+
+	//Asterisk Operator (*)-->dereferencing
+	address1 := Address{"Malang", "Jawa Timur", "Indonesia"}
+	var address2 *Address = &address1 // pointer
+	address2.City = "Surabaya"
+	address2 = &Address{"Jokorto", "DKO Jokorto", "Indonesio"} //gajadi pass by reference dgn address1, ganti alamat baru
+	fmt.Println(address1)
+	fmt.Println(address2)
+
+	address5 := Address{"Medan", "Sumatera Utara", "Indonesia"}
+	address6 := &address5
+
+	address6.City = "Purwokerto"
+
+	*address6 = Address{"Pekalongan", "Gatau", "Indonesia"} //address6 pindah ke alamat baru dan data yg sebelumnya beralamat sama ikut pindah
+	fmt.Println(address5)
+	fmt.Println(address6)
+
+	//Operator New
+	var alamat1 *Address = new(Address) // sama kayak alamat &Address {}
+	var alamat2 *Address = alamat1
+
+	alamat2.Country = "China"
+
+	fmt.Println(alamat1)
+	fmt.Println(alamat2)
+
+	//Pointer di Function
+	/* parameter di function umumnya pass by value, dimana data akan dicopy lalu
+	dikirim ke function tersebut
+	*/
+	//Cara I
+	// var adress *Address = &Address{}
+	// ChangeAddressToIndonesia(adress)
+
+	//Cara II
+	adress := Address{"Subang", "Jawa Barat", ""}
+	ChangeAddressToIndonesia(&adress)
+	fmt.Println(adress)
+
+	//Pointer di Method
+	//Data Struct di dalam method juga pass by value
+	Rob := Man{"Robin"}
+	Rob.Married()
+	fmt.Println(Rob.Name)
+
+	//Package & Import --> harus bentuk package baru bs import
+	fmt.Println(helper.SayHello("Robin"))
+	cobaya.Coba()
+
+	//Access Modifier
+	
+	
+}
+
+// Pointer di Method
+type Man struct {
+	Name string
+}
+
+func (man *Man) Married() {
+	man.Name = "Mr. " + man.Name
+}
+
+// Pointer di function
+func ChangeAddressToIndonesia(address *Address) {
+	address.Country = "Indonesia"
+}
+
+// Pointer
+type Address struct {
+	City, Province, Country string
+}
+
+// Type Assertions
+func percobaan() interface{} {
+	return 15
+}
+
+// Nil
+func NewMap(name string) map[string]string {
+	if name == "" {
+		return nil
+	} else {
+		return map[string]string{
+			"nama": name,
+		}
+	}
+}
+
+// Interface kosong --> GoLang bukan OOP, type alias bernama any
+func random() any {
+	return true
+}
+
+// Interface
+type HasName interface {
+	GetName() string // ini kontrak/syarat
+}
+
+func Hello(value HasName) {
+	fmt.Println("Hello", value.GetName())
+}
+
+type Animal struct {
+	Name string
+}
+type Person struct {
+	Name string
+}
+
+func (animal Animal) GetName() string {
+	return animal.Name
+}
+func (person Person) GetName() string {
+	return person.Name
+}
+
+// Method
+func (customer Customer) sayHello1(name string) {
+	fmt.Println("Hello", name, ", my Name is", customer.Name)
+}
+
+// Struct
+type Customer struct {
+	Name, Address string
+	Age           int
+}
+
+// Defer
+func logging() {
+	fmt.Println("Selasai memanggil function")
+}
+
+func runapplication() {
+	defer logging()
+	//defer tetap dijalankan walau di dalam func ini ada error
+	fmt.Println("Run Application")
+}
+
+// Panic
+func endApp() {
+	fmt.Println("End App")
+	message := recover()
+	fmt.Println("Terjadi panic, ", message)
+}
+
+func runApp(error bool) {
+	defer endApp()
+	if error {
+		panic("Error")
+	}
+}
+
+type Blacklist func(string) bool
+
+func registerUser(name string, blacklist Blacklist) {
+	if blacklist(name) {
+		fmt.Println("You Are Blocked")
+	} else {
+		fmt.Println("Welcome " + name)
+	}
+}
+
+// Recursive Function
+// pake for
+func factorial(nilai int) int {
+	result := 1
+	for i := 1; i <= nilai; i++ {
+		result *= i
+	}
+	return result
+}
+
+// recursive
+func FactorialRecursive(value int) int {
+	if value == 1 {
+		return 1
+	} else {
+		return value * FactorialRecursive(value-1)
+	}
+}
+
+// Function Type
+type (
+	Filter  func(string) string
+)
+
+func sayHelloWithFilter(name string, filter Filter) {
+	fmt.Println("Hello", filter(name))
+}
+
+func spamFilter(name string) string {
+	if name == "Anjing" {
+		return "Yang bener aje !!! Rudi gong"
+	} else {
+		return name
+	}
+}
+func sumAll(numbers ...int) (total int) {
+	total = 0
+	for _, number := range numbers {
+		total += number
+	}
+	return
+
 }
 
 func parameter(firstname string, lastname string) { //parameter function
@@ -311,4 +662,12 @@ func multipleHello() (string, string) { //multiple return value
 
 func sayHello() {
 	fmt.Println("Becek")
+
+}
+
+func namedReturnValue() (firstname, middlename, lastname string) {
+	firstname = "Christopher"
+	middlename = "Robin"
+	lastname = "Tanugroho"
+	return firstname, middlename, lastname
 }
