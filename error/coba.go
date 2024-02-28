@@ -41,19 +41,28 @@ func main() {
 
 	err := SaveData("as", nil)
 	if err != nil {
-		if validationErr, ok := err.(*validationError); ok {
-			fmt.Println("validation error:", validationErr.Error())
-		}else if notFoundErr, ok := err.(*notFoundError);ok{
-			fmt.Println("not found error:", notFoundErr.Error())
-		}else{
-			fmt.Println("Unknown Error:", err.Error())
+// 		if validationErr, ok := err.(*validationError); ok {
+// 			fmt.Println("validation error:", validationErr.Error())
+// 		}else if notFoundErr, ok := err.(*notFoundError);ok{
+// 			fmt.Println("not found error:", notFoundErr.Error())
+// 		}else{
+// 			fmt.Println("Unknown Error:", err.Error())
+// 		}
+// 	}
+
+// }
+		switch finalError := err.(type){
+		case *validationError :
+			fmt.Println("validation error:", finalError.Error())
+		case *notFoundError :
+			fmt.Println("not found error:", finalError.Error())
+			default : 
+			fmt.Println("Unknown Error:", finalError.Error())
 		}
 	} else {
 		fmt.Println("Sukses")
 	}
-
 }
-
 // func Pembagian(nilai int, pembagi int) (int, error) {
 // 	if pembagi == 0 {
 // 		return 0, errors.New("Pembagian dengan NOL")
