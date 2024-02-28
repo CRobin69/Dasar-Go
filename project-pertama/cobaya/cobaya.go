@@ -5,7 +5,8 @@ import (
 	"project-pertama/helper"
 )
 
+var Application = "Golang"
 func Coba (){
-	result := helper.SayHello("Roy")
+	result := helper.SayHello(" Roy")
 	fmt.Println(result)
 }

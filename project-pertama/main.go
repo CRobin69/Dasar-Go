@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
-	"project-pertama/helper"
 	"project-pertama/cobaya"
+	"project-pertama/database"
+	"project-pertama/helper"
+	_"project-pertama/blank"
 	
 )
 
@@ -487,12 +489,24 @@ outerLoop:
 	fmt.Println(Rob.Name)
 
 	//Package & Import --> harus bentuk package baru bs import
-	fmt.Println(helper.SayHello("Robin"))
-	cobaya.Coba()
+	fmt.Println(helper.SayHello(" Robin"))
 
 	//Access Modifier
-	
-	
+	/*
+		Jika nama suatu function diawali huruf besar, artinya bisa diakses dari package lain
+		kalau hurup kecil, tidak bisa diakses
+	*/
+	cobaya.Coba() //huruf gede baru bisa dipanggil
+	fmt.Println(cobaya.Application)
+	//helper.sayang() gabisa
+	helper.Sayang("Ney")
+
+	//Package Initialization (pake init) --> database
+	//otomatis function pd package tereksekusi kalau dipanggil
+	fmt.Println(database.GetDatabase())
+
+	//Blank Identifier (_)
+
 }
 
 // Pointer di Method
@@ -625,7 +639,7 @@ func FactorialRecursive(value int) int {
 
 // Function Type
 type (
-	Filter  func(string) string
+	Filter func(string) string
 )
 
 func sayHelloWithFilter(name string, filter Filter) {
