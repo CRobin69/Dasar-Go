@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	//GoLang gabole 1 variabel pun nganggur
+	//GoLang gabole 1 variabel pun nganggu
 
 	fmt.Println("Hello, World")
 
